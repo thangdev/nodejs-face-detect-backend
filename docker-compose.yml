@@ -1,0 +1,28 @@
+version: '3.6'
+
+services: 
+    node-brain-api:
+        container_name: backend-api
+        build: ./
+        command: npm start
+        working_dir: /usr/src/smart-brain-api
+
+        environment: 
+            POSTGRES_URL: postgres://username:password@postgres:5432/brain_app_db
+        links: 
+            - postgres
+        ports:
+            - "4646:4646"
+        volumes: 
+            - ./:/usr/src/smart-brain-api
+    
+    postgres:
+        environment: 
+            POSTGRES_USER: username
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: brain_app_db
+            POSTGRES_HOST: postgres
+        image: postgres
+        ports: 
+            - "5432:5432"
+        
